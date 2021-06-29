@@ -5,7 +5,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Redux Actions
-import { deletePost, likePost } from '../../../actions/actions.js';
+import { deletePost, likePost } from '../../../actions/postActions.js';
 
 // Moment
 import moment from 'moment';
@@ -27,7 +27,7 @@ const Post = ({ post, setCurrentId }) => {
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title}></CardMedia>
       <div className={classes.overlay}>
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
       </div>
       <div className={classes.overlay2}>
@@ -48,7 +48,7 @@ const Post = ({ post, setCurrentId }) => {
       </CardContent>
       <CardActions className={classes.cardActions}>
         <Button color="primary" onClick={() => dispatch(likePost(post._id))}>
-          <ThumbUpAltIcon /> &nbsp; {post.likeCount}
+          <ThumbUpAltIcon /> &nbsp; {post.likes.length}
         </Button>
         <Button color="primary" onClick={() => dispatch(deletePost(post._id))}>
           <DeleteIcon />

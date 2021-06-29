@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 
 // Redux Actions
-import { getPosts } from '../../actions/actions.js';
+import { getPosts } from '../../actions/postActions.js';
 
 // React Components
 import Posts from '../Posts/Posts.jsx';

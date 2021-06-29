@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -21,16 +21,15 @@ const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const history = useHistory();
   const dispatch = useDispatch();
-
-  console.log(user);
+  const location = useLocation();
 
   useEffect(() => {
-    const token = user?.token;
+    // const token = user?.token;
 
     // JWT...
 
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [user?.token]);
+  }, [user?.token, location]);
 
   const logout = () => {
     dispatch({ type: LOGOUT });
@@ -38,6 +37,9 @@ const Navbar = () => {
     history.push('/');
     setUser(null);
   };
+
+  console.log(user);
+  console.log(user?.profile);
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -62,7 +64,7 @@ const Navbar = () => {
                 alt={user.profile.name}
                 src={user.profile.imageUrl}
               >
-                {user.profile.name.charAt(0)}
+                {user.profile.name && user.profile.name.charAt[0]}
               </Avatar>
               <Typography className={classes.userName} variant="h6">{user.profile.name}</Typography>
               <Button className={classes.logout} variant="contained" color="secondary" onClick={logout}>Logout</Button>

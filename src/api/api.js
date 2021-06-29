@@ -1,9 +1,24 @@
 import axios from 'axios';
 
-const url = 'https://safe-mountain-36141.herokuapp.com/posts';
+// const baseURL = 'https://safe-mountain-36141.herokuapp.com'
+const baseURL = 'http://localhost:5000';
 
-export const fetchPosts = () => axios.get(url);
-export const createPost = (newPost) => axios.post(url, newPost);
-export const updatePost = (id, updatedPost) => axios.patch(`${url}/${id}`, updatedPost);
-export const deletePost = (id) => axios.delete(`${url}/${id}`);
-export const likePost = (id) => axios.patch(`${url}/${id}/like`);
+const API = axios.create({ baseURL: baseURL });
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem('profile')) {
+    req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+  }
+
+  return req;
+})
+
+// Posts
+export const fetchPosts =                    () => API.get('/posts');
+export const createPost =             (newPost) => API.post('/posts', newPost);
+export const updatePost = (postId, updatedPost) => API.patch(`/posts/${postId}`, updatedPost);
+export const deletePost =              (postId) => API.delete(`/posts/${postId}`);
+export const likePost   =              (postId) => API.patch(`/posts/${postId}/like`);
+
+// Auth
+export const signin = (formData) => API.post(`/users/signin`, formData);
+export const signup = (formData) => API.post(`/users/signup`, formData);

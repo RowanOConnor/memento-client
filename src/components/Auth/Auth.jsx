@@ -6,7 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 // Redux
 import { useDispatch } from 'react-redux';
+
+// Redux Actions
 import { AUTH } from '../../actions/actionTypes.js';
+import { signin, signup } from '../../actions/authActions.js';
 
 // Material UI Components & Icons
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
@@ -22,22 +25,38 @@ import Icon from './Icon.jsx';
 // Styles
 import useStyles from './styles.js';
 
+const initialFormData = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+}
+
 const Auth = () => {
   const classes = useStyles();
 
-  const [isSignUp, setIsSignUp] = useState(false);
+  // Form state
+  const [formData, setFormData] = useState(initialFormData);
+  const [isSignup, setIsSignup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
   };
 
-  const handleChange = () => {
-
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Toggle password visibility
@@ -47,7 +66,7 @@ const Auth = () => {
 
   // Toggle sign up/sign in
   const switchMode = () => {
-    setIsSignUp((prevIsSignUp) => !prevIsSignUp);
+    setIsSignup((prevIsSignUp) => !prevIsSignUp);
   }
 
   const googleSuccess = async (res) => {
@@ -74,16 +93,16 @@ const Auth = () => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography variant="h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
+        <Typography variant="h5">{isSignup ? 'Sign Up' : 'Sign In'}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            { isSignUp && (
+            { isSignup && (
               <>
                 <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
                 <Input name="lastName" label="Last Name" handleChange={handleChange} half />
               </>
             ) }
-            <Input name="email" label="Email" handleChange={handleChange} type="email" autoFocus={!isSignUp}/>
+            <Input name="email" label="Email" handleChange={handleChange} type="email" autoFocus={!isSignup}/>
             <Input
               name="password"
               label="Password"
@@ -91,7 +110,7 @@ const Auth = () => {
               type={showPassword ? "text" : "password" }
               handleShowPassword={handleShowPassword}
             />
-            { isSignUp && (
+            { isSignup && (
               <Input
                 name="confirmPassword"
                 label="Confirm Password"
@@ -102,7 +121,7 @@ const Auth = () => {
             ) }
           </Grid>
           <Button className={classes.submit} type="submit" fullWidth variant="contained" color="primary">
-            { isSignUp ? 'Sign Up' : 'Sign In' }
+            { isSignup ? 'Sign Up' : 'Sign In' }
           </Button>
           <GoogleLogin
             clientId="610408185493-h2rvoro5io85p9ppputpeu2uqve1u1bh.apps.googleusercontent.com"
@@ -126,7 +145,7 @@ const Auth = () => {
           <Grid container justify="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
-                { isSignUp ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up' }
+                { isSignup ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up' }
               </Button>
             </Grid>
           </Grid>
