@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const baseURL = 'https://safe-mountain-36141.herokuapp.com'
-const baseURL = 'http://localhost:5000';
+const baseURL = 'https://safe-mountain-36141.herokuapp.com';
+// const baseURL = 'http://localhost:5000';
 
 const API = axios.create({ baseURL: baseURL });
 API.interceptors.request.use((req) => {
