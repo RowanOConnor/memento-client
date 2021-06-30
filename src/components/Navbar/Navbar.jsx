@@ -1,10 +1,10 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 // Redux
 import { useDispatch } from 'react-redux';
-import { LOGOUT } from '../../actions/actionTypes.js';
+import { SIGN_OUT } from '../../actions/actionTypes.js';
 
 // JWT
 import decode from 'jwt-decode';
@@ -26,12 +26,14 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const logout = () => {
-    dispatch({ type: LOGOUT });
+  const signOut = () => {
+    dispatch({ type: SIGN_OUT });
 
     history.push('/');
     setUser(null);
   };
+
+  const memoizedSignOut = useCallback(signOut, [dispatch, history]);
 
   useEffect(() => {
     const token = user?.token;
@@ -40,12 +42,12 @@ const Navbar = () => {
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) {
-        logout();
+        memoizedSignOut();
       }
     }
 
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [user?.token, location]);
+  }, [user?.token, location, memoizedSignOut]);
 
   console.log(user);
   console.log(user?.profile);
@@ -76,7 +78,7 @@ const Navbar = () => {
                 {user.profile.name && user.profile.name.charAt[0]}
               </Avatar>
               <Typography className={classes.userName} variant="h6">{user.profile.name}</Typography>
-              <Button className={classes.logout} variant="contained" color="secondary" onClick={logout}>Logout</Button>
+              <Button className={classes.logout} variant="contained" color="secondary" onClick={signOut}>Logout</Button>
             </div>
           )
           : (

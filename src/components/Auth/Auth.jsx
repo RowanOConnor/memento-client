@@ -8,8 +8,8 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // Redux Actions
-import { AUTH } from '../../actions/actionTypes.js';
-import { signin, signup } from '../../actions/authActions.js';
+import { SIGN_IN } from '../../actions/actionTypes.js';
+import { signIn, signUp } from '../../actions/authActions.js';
 
 // Material UI Components & Icons
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
@@ -38,7 +38,7 @@ const Auth = () => {
 
   // Form state
   const [formData, setFormData] = useState(initialFormData);
-  const [isSignup, setIsSignup] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
@@ -48,10 +48,10 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isSignup) {
-      dispatch(signup(formData, history));
+    if (isSignUp) {
+      dispatch(signUp(formData, history));
     } else {
-      dispatch(signin(formData, history));
+      dispatch(signIn(formData, history));
     }
   };
 
@@ -66,7 +66,7 @@ const Auth = () => {
 
   // Toggle sign up/sign in
   const switchMode = () => {
-    setIsSignup((prevIsSignUp) => !prevIsSignUp);
+    setIsSignUp((prevIsSignUp) => !prevIsSignUp);
   }
 
   const googleSuccess = async (res) => {
@@ -75,7 +75,7 @@ const Auth = () => {
     const token = res?.tokenId;
 
     try {
-      dispatch({ type: AUTH, data: { profile, token }});
+      dispatch({ type: SIGN_IN, data: { profile, token }});
 
       history.push('/');
     } catch (error) {
@@ -93,16 +93,16 @@ const Auth = () => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography variant="h5">{isSignup ? 'Sign Up' : 'Sign In'}</Typography>
+        <Typography variant="h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            { isSignup && (
+            { isSignUp && (
               <>
                 <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
                 <Input name="lastName" label="Last Name" handleChange={handleChange} half />
               </>
             ) }
-            <Input name="email" label="Email" handleChange={handleChange} type="email" autoFocus={!isSignup}/>
+            <Input name="email" label="Email" handleChange={handleChange} type="email" autoFocus={!isSignUp}/>
             <Input
               name="password"
               label="Password"
@@ -110,7 +110,7 @@ const Auth = () => {
               type={showPassword ? "text" : "password" }
               handleShowPassword={handleShowPassword}
             />
-            { isSignup && (
+            { isSignUp && (
               <Input
                 name="confirmPassword"
                 label="Confirm Password"
@@ -121,7 +121,7 @@ const Auth = () => {
             ) }
           </Grid>
           <Button className={classes.submit} type="submit" fullWidth variant="contained" color="primary">
-            { isSignup ? 'Sign Up' : 'Sign In' }
+            { isSignUp ? 'Sign Up' : 'Sign In' }
           </Button>
           <GoogleLogin
             clientId="610408185493-h2rvoro5io85p9ppputpeu2uqve1u1bh.apps.googleusercontent.com"
@@ -145,7 +145,7 @@ const Auth = () => {
           <Grid container justify="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
-                { isSignup ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up' }
+                { isSignUp ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up' }
               </Button>
             </Grid>
           </Grid>

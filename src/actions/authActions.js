@@ -1,15 +1,14 @@
 import * as api from '../api/api.js';
 
-import { AUTH } from './actionTypes.js';
+import { SIGN_IN, SIGN_UP } from './actionTypes.js';
 
 // Action creators
-
-export const signin = (formData, history) => async (dispatch) => {
+export const signIn = (formData, history) => async (dispatch) => {
   try {
     // Log in user
     const { data } = await api.signin(formData);
 
-    dispatch({ type: AUTH, data: data });
+    dispatch({ type: SIGN_IN, data: data });
 
     history.push('/');
   } catch (error) {
@@ -17,13 +16,13 @@ export const signin = (formData, history) => async (dispatch) => {
   }
 }
 
-export const signup = (formData, history) => async (dispatch) => {
+export const signUp = (formData, history) => async (dispatch) => {
   try {
     // Sign up user
     const { data } = await api.signup(formData);
     console.log('Data (in authActions.js): ', data);
 
-    dispatch({ type: AUTH, data: data });
+    dispatch({ type: SIGN_UP, data: data });
 
     history.push('/');
   } catch (error) {
