@@ -6,6 +6,9 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../actions/actionTypes.js';
 
+// JWT
+import decode from 'jwt-decode';
+
 // Material UI Components
 import { AppBar, Avatar, Button, Typography, Toolbar } from '@material-ui/core';
 
@@ -23,20 +26,26 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  useEffect(() => {
-    // const token = user?.token;
-
-    // JWT...
-
-    setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [user?.token, location]);
-
   const logout = () => {
     dispatch({ type: LOGOUT });
 
     history.push('/');
     setUser(null);
   };
+
+  useEffect(() => {
+    const token = user?.token;
+
+    // Check for expired JWT
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        logout();
+      }
+    }
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [user?.token, location]);
 
   console.log(user);
   console.log(user?.profile);

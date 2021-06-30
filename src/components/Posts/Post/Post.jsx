@@ -49,7 +49,7 @@ const Post = ({ post, setCurrentId }) => {
         <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
       </div>
-      { ((post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id)) &&
+      { ((post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id)) && (
         <div className={classes.overlay2}>
           <Button
             style={{color: 'white' }}
@@ -59,7 +59,7 @@ const Post = ({ post, setCurrentId }) => {
             <MoreHorizIcon fontSize="default" />
           </Button>
         </div>
-      }
+      ) }
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary">{post.tags.map((tag) => `#${tag} `)}</Typography>
       </div>
@@ -71,11 +71,11 @@ const Post = ({ post, setCurrentId }) => {
         <Button color="primary" onClick={() => dispatch(likePost(post._id))}>
           <LikeIcon /> &nbsp; {post.likes.length}
         </Button>
-        { ((post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id)) &&
+        { ((post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id)) && (
           <Button color="primary" onClick={() => dispatch(deletePost(post._id))}>
             <DeleteIcon />
           </Button>
-        }
+        ) }
       </CardActions>
     </Card>
   );
