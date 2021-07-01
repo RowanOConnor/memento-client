@@ -13,13 +13,17 @@ import Post from './Post/Post.jsx';
 import useStyles from './styles.js';
 
 const Posts = ({ setCurrentId }) => {
-  const posts = useSelector((state) => state.posts);
+  // Get array of post IDs from Redux store
+  const postIds = useSelector((state) =>
+    (state.posts)
+      ? state.posts.map((post) => post._id)
+      : []
+  );
   const classes = useStyles();
-  
+
   return (
-    posts === null
-      ? <CircularProgress />
-      : posts.length === 0
+    (postIds)
+      ? (postIds.length === 0)
         ? (
           <Paper className={classes.paper}>
             <Typography variant="h5">No memories to display... Yet!</Typography>
@@ -27,13 +31,14 @@ const Posts = ({ setCurrentId }) => {
         )
         : (
           <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-            {posts.map((post) => (
-              <Grid key={post._id} item xs={12} sm={6}>
-                <Post post={post} setCurrentId={setCurrentId} />
+            {postIds.map((postId) => (
+              <Grid key={postId} item xs={12} sm={6}>
+                <Post postId={postId} setCurrentId={setCurrentId} />
               </Grid>
             ))}
           </Grid>
         )
+      : <CircularProgress />
   );
 }
 

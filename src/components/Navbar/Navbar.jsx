@@ -49,9 +49,6 @@ const Navbar = () => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [user?.token, location, memoizedSignOut]);
 
-  console.log(user);
-  console.log(user?.profile);
-
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <div className={classes.brandContainer}>

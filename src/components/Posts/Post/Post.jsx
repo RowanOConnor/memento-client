@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Redux Actions
 import { deletePost, likePost } from '../../../actions/postActions.js';
@@ -20,9 +20,31 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 // Component Styles
 import useStyles from './styles.js';
 
-const Post = ({ post, setCurrentId }) => {
+const Post = ({ postId, setCurrentId }) => {
   const classes = useStyles();
+
+  // Hooks
   const dispatch = useDispatch();
+
+  // Get post with matching ID from Redux store
+  const post = useSelector((state) =>
+    state.posts.find((post) => post._id === postId)
+  );
+
+  // Post still loading, return skeleton card
+  if (true) {
+    return (
+      <Card className={classes.card}>
+        <div className={classes.details}>
+          <Typography variant="body2" color="textSecondary">#tags</Typography>
+        </div>
+        <Typography className={classes.title} variant="h5">Title</Typography>
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">Message</Typography>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -42,6 +64,8 @@ const Post = ({ post, setCurrentId }) => {
     return <ThumbUpAltOutlined />;
   }
 
+  const userIsCreator = (post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id);
+
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title}></CardMedia>
@@ -49,7 +73,7 @@ const Post = ({ post, setCurrentId }) => {
         <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
       </div>
-      { ((post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id)) && (
+      { (userIsCreator) && (
         <div className={classes.overlay2}>
           <Button
             style={{color: 'white' }}
@@ -71,7 +95,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button color="primary" onClick={() => dispatch(likePost(post._id))}>
           <LikeIcon /> &nbsp; {post.likes.length}
         </Button>
-        { ((post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id)) && (
+        { (userIsCreator) && (
           <Button color="primary" onClick={() => dispatch(deletePost(post._id))}>
             <DeleteIcon />
           </Button>

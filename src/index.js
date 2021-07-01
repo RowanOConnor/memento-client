@@ -4,9 +4,10 @@ import ReactDOM from 'react-dom';
 
 // Redux
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import reducers from './reducers/reducers.js';
+import reducer from './reducers/reducer.js';
 
 // React Components
 import App from './App';
@@ -15,7 +16,10 @@ import App from './App';
 import './index.css';
 
 // Redux Store
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 ReactDOM.render(
   <Provider store={store}>
