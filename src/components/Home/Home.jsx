@@ -7,7 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // Redux Actions
-import { getPosts } from '../../actions/postActions.js';
+import { getPosts, getPostsBySearch } from '../../actions/postActions.js';
 
 // React Components
 import Posts from '../Posts/Posts.jsx';
@@ -46,15 +46,16 @@ const Home = () => {
     dispatch(getPosts());
   }, [currentId, dispatch]);
 
-  const searchPost = () => {
-    if (searchString.trim()) {
-      // dispatch -> fetch search post
+  const searchPosts = () => {
+    if (searchString.trim() || tags.length !== 0) {
+      dispatch(getPostsBySearch({ search: searchString, tags: tags.join(',') }));
+      history.push(`/posts/search?searchQuery=${searchString || 'none'}&${tags.join(',')}`);
     }
   }
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      searchPost();
+      searchPosts();
     }
   }
 
@@ -92,7 +93,7 @@ const Home = () => {
                   label="Search Tags"
                   variant="outlined"
                 />
-                <Button className={classes.searchButton} onClick={searchPost} variant="contained" color="primary">Search</Button>
+                <Button className={classes.searchButton} onClick={searchPosts} variant="contained" color="primary">Search</Button>
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId} />
               <Paper elevation={6}>

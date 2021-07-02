@@ -13,11 +13,12 @@ API.interceptors.request.use((req) => {
 })
 
 // Posts
-export const fetchPosts =                    () => API.get('/posts');
-export const createPost =             (newPost) => API.post('/posts', newPost);
-export const updatePost = (postId, updatedPost) => API.patch(`/posts/${postId}`, updatedPost);
-export const deletePost =              (postId) => API.delete(`/posts/${postId}`);
-export const likePost   =              (postId) => API.patch(`/posts/${postId}/like`);
+export const fetchPosts         =                    () => API.get('/posts');
+export const fetchPostsBySearch =         (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
+export const createPost         =             (newPost) => API.post('/posts', newPost);
+export const updatePost         = (postId, updatedPost) => API.patch(`/posts/${postId}`, updatedPost);
+export const deletePost         =              (postId) => API.delete(`/posts/${postId}`);
+export const likePost           =              (postId) => API.patch(`/posts/${postId}/like`);
 
 // Auth
 export const signin = (formData) => API.post(`/users/signin`, formData);

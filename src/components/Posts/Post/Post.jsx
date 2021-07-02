@@ -67,7 +67,7 @@ const Post = ({ postId, setCurrentId }) => {
   const userIsCreator = (post.creator === user?.profile?.googleId) || (post.creator === user?.profile?._id);
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={6}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title}></CardMedia>
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>

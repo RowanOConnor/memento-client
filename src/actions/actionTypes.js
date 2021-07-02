@@ -1,8 +1,9 @@
 // Posts
-export const    CREATE = 'posts/CREATE';
-export const    UPDATE = 'posts/UPDATE';
-export const    DELETE = 'posts/DELETE';
-export const FETCH_ALL = 'posts/FETCH_ALL';
+export const          CREATE = 'posts/CREATE';
+export const          UPDATE = 'posts/UPDATE';
+export const          DELETE = 'posts/DELETE';
+export const       FETCH_ALL = 'posts/FETCH_ALL';
+export const FETCH_BY_SEARCH = 'posts/FETCH_BY_SEARCH';
 
 // Users
 export const  SIGN_IN = 'users/SIGN_IN';

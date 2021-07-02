@@ -59,9 +59,8 @@ const Navbar = () => {
           variant="h2"
           align="center"
         >
-          Memories
+          Memento
         </Typography>
-        <img className={classes.image} src={memories} alt="icon" height="60"/>
       </div>
       <Toolbar className={classes.toolbar}>
         { user
