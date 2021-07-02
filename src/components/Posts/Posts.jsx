@@ -20,7 +20,6 @@ const Posts = ({ setCurrentId }) => {
       : []
   );
 
-  console.log(postIds);
   const classes = useStyles();
 
   return (
