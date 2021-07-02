@@ -32,7 +32,7 @@ const Post = ({ postId, setCurrentId }) => {
   );
 
   // Post still loading, return skeleton card
-  if (true) {
+  if (!post) {
     return (
       <Card className={classes.card}>
         <div className={classes.details}>

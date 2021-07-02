@@ -19,6 +19,8 @@ const Posts = ({ setCurrentId }) => {
       ? state.posts.map((post) => post._id)
       : []
   );
+
+  console.log(postIds);
   const classes = useStyles();
 
   return (
