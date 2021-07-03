@@ -1,10 +1,28 @@
 import * as api from '../api/api.js';
 
-import { CREATE, UPDATE, DELETE, FETCH_ALL, FETCH_BY_SEARCH } from './actionTypes.js';
+import { CREATE, UPDATE, DELETE, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING } from './actionTypes.js';
 
 // Action Creators
+export const getPost = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data: { post } } = await api.fetchPost(id);
+
+    dispatch({
+      type: FETCH_POST,
+      payload: {
+        post: post
+      }
+    });
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getPosts = (page) => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING });
     const { data: { posts, currentPage, numberOfPages } } = await api.fetchPosts(page);
 
     dispatch({
@@ -15,6 +33,7 @@ export const getPosts = (page) => async (dispatch) => {
         numberOfPages: numberOfPages
       }
     });
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
@@ -22,6 +41,7 @@ export const getPosts = (page) => async (dispatch) => {
 
 export const getPostsBySearch = (searchQuery, page) => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING });
     const { data: { posts, currentPage, numberOfPages } } = await api.fetchPostsBySearch(searchQuery, page);
 
     dispatch({
@@ -32,13 +52,15 @@ export const getPostsBySearch = (searchQuery, page) => async (dispatch) => {
         numberOfPages: numberOfPages
       }
     });
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
 }
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post, history) => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING });
     const { data: { newPost } } = await api.createPost(post);
 
     dispatch({
@@ -47,6 +69,8 @@ export const createPost = (post) => async (dispatch) => {
         newPost: newPost
       }
     });
+    dispatch({ type: END_LOADING });
+    history.push(`/posts/${newPost._id}`);
   } catch (error) {
     console.log(error);
   }

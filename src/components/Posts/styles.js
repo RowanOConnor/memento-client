@@ -14,4 +14,7 @@ export default makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
   },
+  loadingPaper: {
+    display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
+  },
 }));

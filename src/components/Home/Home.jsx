@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // Redux Actions
-import { getPosts, getPostsBySearch } from '../../actions/postActions.js';
+import { getPostsBySearch } from '../../actions/postActions.js';
 
 // React Components
 import Posts from '../Posts/Posts.jsx';
@@ -40,11 +40,6 @@ const Home = () => {
   const query = useQuery();
   const history = useHistory();
   const page = query.get('page') || 1;
-  const searchQuery = query.get('searchQuery');
-  
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [currentId, dispatch]);
 
   const searchPosts = () => {
     if (searchString.trim() || tags.length !== 0) {
@@ -98,8 +93,8 @@ const Home = () => {
                 <Button className={classes.searchButton} onClick={searchPosts} variant="contained" color="primary">Search</Button>
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId} />
-              <Paper elevation={6}>
-                <Pagination className={classes.pagination} page={page} />
+              <Paper className={classes.pagination} elevation={6}>
+                <Pagination page={page} />
               </Paper>
             </Grid>
           </Grid>
