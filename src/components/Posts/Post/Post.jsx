@@ -28,7 +28,7 @@ const Post = ({ postId, setCurrentId }) => {
 
   // Get post with matching ID from Redux store
   const post = useSelector((state) =>
-    state.posts.find((post) => post._id === postId)
+    state.posts.posts.find((post) => post._id === postId)
   );
 
   // Post still loading, return skeleton card

@@ -10,11 +10,11 @@ API.interceptors.request.use((req) => {
   }
 
   return req;
-})
+});
 
 // Posts
-export const fetchPosts         =                    () => API.get('/posts');
-export const fetchPostsBySearch =         (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
+export const fetchPosts         =                (page) => API.get(`/posts?page=${page}`);
+export const fetchPostsBySearch =   (searchQuery, page) => API.get(`/posts/search?page=${page}&q=${searchQuery.q || 'none'}&tags=${searchQuery.tags}`);
 export const createPost         =             (newPost) => API.post('/posts', newPost);
 export const updatePost         = (postId, updatedPost) => API.patch(`/posts/${postId}`, updatedPost);
 export const deletePost         =              (postId) => API.delete(`/posts/${postId}`);

@@ -23,7 +23,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const currentPost = useSelector((state) => {
     if (currentId) {
-      return state.posts.find((p) => p._id === currentId)
+      return state.posts.posts.find((p) => p._id === currentId)
     } else {
       return null;
     }

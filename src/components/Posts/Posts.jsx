@@ -15,8 +15,8 @@ import useStyles from './styles.js';
 const Posts = ({ setCurrentId }) => {
   // Get array of post IDs from Redux store
   const postIds = useSelector((state) =>
-    (state.posts)
-      ? state.posts.map((post) => post._id)
+    (state.posts.posts)
+      ? state.posts.posts.map((post) => post._id)
       : []
   );
 
@@ -33,7 +33,7 @@ const Posts = ({ setCurrentId }) => {
         : (
           <Grid className={classes.container} container alignItems="stretch" spacing={3}>
             {postIds.map((postId) => (
-              <Grid key={postId} item xs={12} sm={6}>
+              <Grid key={postId} item xs={12} sm={12} md={6} lg={4}>
                 <Post postId={postId} setCurrentId={setCurrentId} />
               </Grid>
             ))}

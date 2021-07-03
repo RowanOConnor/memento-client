@@ -15,8 +15,9 @@ import { AppBar, Avatar, Button, Typography, Toolbar } from '@material-ui/core';
 // Custom styles
 import useStyles from './styles.js';
 
-// Navbar image
-import memories from '../../images/memories.png';
+// Images
+import memoriesText from '../../images/memories-text.png';
+import memoriesLogo from '../../images/memories-logo.png';
 
 const Navbar = () => {
   const classes = useStyles();
@@ -52,15 +53,9 @@ const Navbar = () => {
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <div className={classes.brandContainer}>
-        <Typography
-          component={Link}
-          to="/"
-          className={classes.heading}
-          variant="h2"
-          align="center"
-        >
-          Memento
-        </Typography>
+        <img src={memoriesText} alt="icon" height="45px" />
+        <img className={classes.image} src={memoriesLogo} alt="icon" height="40px" />
+
       </div>
       <Toolbar className={classes.toolbar}>
         { user

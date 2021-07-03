@@ -48,8 +48,10 @@ const Home = () => {
 
   const searchPosts = () => {
     if (searchString.trim() || tags.length !== 0) {
-      dispatch(getPostsBySearch({ search: searchString, tags: tags.join(',') }));
-      history.push(`/posts/search?searchQuery=${searchString || 'none'}&${tags.join(',')}`);
+      // Get first page of search results
+      const newPage = 1;
+      dispatch(getPostsBySearch({ q: searchString, tags: tags.join(',') }, newPage));
+      history.push(`/posts/search?page=${newPage}&q=${searchString || 'none'}&${tags.join(',')}`);
     }
   }
 
@@ -97,7 +99,7 @@ const Home = () => {
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId} />
               <Paper elevation={6}>
-                <Pagination />
+                <Pagination className={classes.pagination} page={page} />
               </Paper>
             </Grid>
           </Grid>
