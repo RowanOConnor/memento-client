@@ -1,4 +1,15 @@
-import { CREATE, UPDATE, DELETE, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING } from '../actions/actionTypes.js';
+import {
+  CREATE,
+  UPDATE,
+  DELETE,
+  LIKE,
+  COMMENT,
+  FETCH_POST,
+  FETCH_ALL,
+  FETCH_BY_SEARCH,
+  START_LOADING,
+  END_LOADING
+} from '../actions/actionTypes.js';
 
 const initialPostsState = {
   posts: [],
@@ -42,6 +53,8 @@ const postsReducer = (postsState = initialPostsState, action) => {
         posts: [ ...postsState.posts, action.payload.newPost ]
       };
     case UPDATE:
+    case LIKE:
+    case COMMENT:
       return {
         ...postsState,
         posts: postsState.posts.map((post) => {

@@ -70,7 +70,6 @@ const Auth = () => {
   }
 
   const googleSuccess = async (res) => {
-    console.log(res);
     const profile = res?.profileObj;
     const token = res?.tokenId;
 

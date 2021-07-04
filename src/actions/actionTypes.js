@@ -5,6 +5,8 @@ export const          DELETE = 'posts/DELETE';
 export const      FETCH_POST = 'posts/FETCH_POST';
 export const       FETCH_ALL = 'posts/FETCH_ALL';
 export const FETCH_BY_SEARCH = 'posts/FETCH_BY_SEARCH';
+export const            LIKE = 'posts/LIKE';
+export const         COMMENT = 'posts/COMMENT';
 
 // Loading
 export const START_LOADING = 'posts/START_LOADING';

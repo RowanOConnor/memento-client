@@ -20,7 +20,6 @@ export const signUp = (formData, history) => async (dispatch) => {
   try {
     // Sign up user
     const { data } = await api.signup(formData);
-    console.log('Data (in authActions.js): ', data);
 
     dispatch({ type: SIGN_UP, data: data });
 

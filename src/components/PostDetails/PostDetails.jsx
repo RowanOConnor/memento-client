@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getPost, getPostsBySearch } from '../../actions/postActions.js';
+import CommentsSection from './CommentsSection.jsx';
 
 // Moment
 import moment from 'moment';
@@ -57,7 +58,7 @@ const PostDetails = () => {
           <Divider style={{ margin: '20px 0' }} />
           <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
           <Divider style={{ margin: '20px 0' }} />
-          <Typography variant="body1"><strong>Comments - coming soon!</strong></Typography>
+          <CommentsSection postId={post._id} />
           <Divider style={{ margin: '20px 0' }} />
         </div>
         <div className={classes.imageSection}>
@@ -68,12 +69,12 @@ const PostDetails = () => {
           />
         </div>
       </div>
-      {recommendedPosts.length && (
+      { recommendedPosts.length ? (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">You might also like:</Typography>
           <Divider />
           <div className={classes.recommendedPosts}>
-            {recommendedPosts.map(({ title, message, name, likes, selectedFile, _id }) => (
+            { recommendedPosts.map(({ title, message, name, likes, selectedFile, _id }) => (
               <div style={{ margin: '20px', cursor: 'pointer' }} onClick={() => openPost(_id)} key={_id}>
                 <Typography gutterBottom variant="h6">{title}</Typography>
                 <Typography gutterBottom variant="subtitle2">{name}</Typography>
@@ -81,10 +82,10 @@ const PostDetails = () => {
                 <Typography gutterBottom variant="subtitle1">Likes: {likes.length}</Typography>
                 <img src={selectedFile} alt="preview" width="200px" />
               </div>
-            ))}
+            )) }
           </div>
         </div>
-      )}
+      ) : <></> }
     </Paper>
   )
 }

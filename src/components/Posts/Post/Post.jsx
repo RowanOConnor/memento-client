@@ -34,6 +34,10 @@ const Post = ({ postId, setCurrentId }) => {
     state.posts.posts.find((post) => post._id === postId)
   );
 
+  const handleLike = async () => {
+    dispatch(likePost(post._id));
+  }
+
   // Post still loading, return skeleton card
   if (!post) {
     return (
@@ -102,7 +106,7 @@ const Post = ({ postId, setCurrentId }) => {
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.cardActions}>
-        <Button color="primary" onClick={() => dispatch(likePost(post._id))}>
+        <Button color="primary" onClick={handleLike}>
           <LikeIcon /> &nbsp; {post.likes.length}
         </Button>
         { (userIsCreator) && (

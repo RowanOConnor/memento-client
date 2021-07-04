@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const baseURL = 'https://safe-mountain-36141.herokuapp.com';
-// const baseURL = 'http://localhost:5000';
+// const baseURL = 'https://safe-mountain-36141.herokuapp.com';
+const baseURL = 'http://localhost:5000';
 
 const API = axios.create({ baseURL: baseURL });
 API.interceptors.request.use((req) => {
@@ -20,6 +20,7 @@ export const createPost         =             (newPost) => API.post('/posts', ne
 export const updatePost         = (postId, updatedPost) => API.patch(`/posts/${postId}`, updatedPost);
 export const deletePost         =              (postId) => API.delete(`/posts/${postId}`);
 export const likePost           =              (postId) => API.patch(`/posts/${postId}/like`);
+export const commentOnPost      =         (id, comment) => API.patch(`/posts/${id}/comment`, comment);
 
 // Auth
 export const signin = (formData) => API.post(`/users/signin`, formData);
